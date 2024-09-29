@@ -4,8 +4,8 @@
 
 vote:
   image:
-    repo: "11093558148"
-    tag: "11093558148"
+    repo: "11093561372"
+    tag: "11093561372"
     pullPolicy: IfNotPresent
   affinity: {}
   nodeSelector: {}
