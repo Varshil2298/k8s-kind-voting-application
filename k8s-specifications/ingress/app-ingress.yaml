@@ -14,6 +14,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: vote-service
+            name: vote
             port:
               number: 80
