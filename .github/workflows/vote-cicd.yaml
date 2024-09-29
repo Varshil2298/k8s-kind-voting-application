@@ -95,6 +95,6 @@ jobs:
       run: |
         git config --global user.email "varshil@gmail.com"
         git config --global user.name "Varshil Desai"
-        git add helm/vote-app-charts/vote/values.yaml
+        git add k8s-specifications/helm/vote-app-charts/vote/values.yaml
         git commit -m "Update vote tag in Helm chart"
         git push
