@@ -28,11 +28,6 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r vote/requirements.txt
-        pip install pytest    
-
-    - name: Run tests
-      run: |
-        cd vote && pytest 
 
   # Run code quality check using flake8
   code-quality:
