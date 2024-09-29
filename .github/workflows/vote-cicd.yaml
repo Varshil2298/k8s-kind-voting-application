@@ -87,9 +87,10 @@ jobs:
       with:
         token: ${{ secrets.TOKEN }}
 
-    - name: Update tag in Helm chart
+    - name: Update repo and tag in Helm chart
       run: |
         sed -i 's/tag: .*/tag: "${{github.run_id}}"/' k8s-specifications/helm/vote-app-charts/vote/values.yaml
+        sed -i 's/repo: .*/repo: "${{github.run_id}}"/' k8s-specifications/helm/vote-app-charts/vote/values.yaml
 
     - name: Commit and push changes
       run: |
