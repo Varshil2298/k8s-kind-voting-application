@@ -4,8 +4,8 @@
 
 vote:
   image:
-    repo: 415916042243.dkr.ecr.ap-south-1.amazonaws.com/roboshop-cart
-    tag: "11093547396"
+    repo: "11093553271"
+    tag: "11093553271"
     pullPolicy: IfNotPresent
   affinity: {}
   nodeSelector: {}
