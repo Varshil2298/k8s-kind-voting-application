@@ -4,8 +4,8 @@
 
 result:
   image:
-    repo: "dockersamples/examplevotingapp_result"
-    tag: "latest"   # Or any specific tag
+    repo: "volley123/result-app"
+    tag: "11104739384"
     pullPolicy: IfNotPresent
   affinity: {}
   nodeSelector: {}
