@@ -5,8 +5,12 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'result/**'
+      - '.github/workflows/result-cicd.yaml'  
     paths-ignore:
       - 'k8s-specifications/**'
+      - 'vote/**'
       - 'README.md'
 
 jobs:
