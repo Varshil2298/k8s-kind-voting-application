@@ -1,4 +1,4 @@
-name: vote CI/CD
+name: vote CI/CD 
 
 # Exclude the workflow to run on changes to the helm chart
 # on:
