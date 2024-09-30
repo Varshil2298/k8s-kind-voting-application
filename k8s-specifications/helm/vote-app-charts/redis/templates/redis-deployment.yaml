@@ -2,25 +2,25 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: vote
-  name: vote
+    app: redis
+  name: redis
 spec:
-  replicas: 1
+  replicas: {{ .Values.redis.replicas }}
   selector:
     matchLabels:
-      app: vote
+      app: redis
   template:
     metadata:
       labels:
-        app: vote
+        app: redis
     spec:
       containers:
-      - name: vote
-        image: {{ .Values.vote.image.repo }}:{{ .Values.vote.image.tag }}
-        imagePullPolicy: {{ .Values.vote.image.pullPolicy }}
+      - name: redis
+        image: {{ .Values.redis.image.repo }}:{{ .Values.redis.image.tag }}
+        imagePullPolicy: {{ .Values.redis.image.pullPolicy }}
         ports:
-        - containerPort: 80
-          name: vote
+        - containerPort: 6379
+          name: redis
         resources:
           limits:
             cpu: 200m
@@ -28,3 +28,9 @@ spec:
           requests:
             cpu: 100m
             memory: 50Mi
+        volumeMounts:
+        - mountPath: /data
+          name: redis-data
+      volumes:
+      - name: redis-data
+        emptyDir: {}
