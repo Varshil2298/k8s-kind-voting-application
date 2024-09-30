@@ -8,10 +8,10 @@ on:
     paths:
       - 'result/**'
       - '.github/workflows/result-cicd.yaml'  
-    paths-ignore:
-      - 'k8s-specifications/**'
-      - 'vote/**'
-      - 'README.md'
+    # paths-ignore:
+    #   - 'k8s-specifications/**'
+    #   - 'vote/**'
+    #   - 'README.md'
 
 jobs:
 

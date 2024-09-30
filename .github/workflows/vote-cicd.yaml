@@ -8,10 +8,10 @@ on:
     paths:
       - 'vote/**'      # Files related to the vote app
       - '.github/workflows/vote-cicd.yaml'  # Vote pipeline configuration  
-    paths-ignore:
-      - 'k8s-specifications/**'
-      - 'result/**'
-      - 'README.md'  
+    # paths-ignore:
+    #   - 'k8s-specifications/**'
+    #   - 'result/**'
+    #   - 'README.md'  
 
 jobs:
 
