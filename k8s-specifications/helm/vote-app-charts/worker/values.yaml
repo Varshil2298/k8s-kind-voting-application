@@ -4,8 +4,8 @@
 
 worker:
   image:
-    repo: "yourdockerhubusername/worker-app"  # Replace with your DockerHub repository
-    tag: "latest"
+    repo: "volley123/worker-app"
+    tag: "11106026319"
     pullPolicy: IfNotPresent
   affinity: {}
   nodeSelector: {}
