@@ -76,7 +76,7 @@ jobs:
         context: ./result
         file: ./result/Dockerfile
         push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/vote-app:${{github.run_id}}
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/result-app:${{github.run_id}}
 
   # Update the Helm chart with the new Docker image tag
   update-newtag-in-helm-chart:
