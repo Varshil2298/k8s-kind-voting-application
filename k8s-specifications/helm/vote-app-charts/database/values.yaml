@@ -5,7 +5,7 @@
 db:
   image:
     repo: postgres
-    tag: "15-alpine"
+    tag: "latest"
     pullPolicy: IfNotPresent
   env:
     POSTGRES_USER: postgres
