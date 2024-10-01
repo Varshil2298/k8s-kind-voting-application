@@ -1,48 +1,39 @@
+// app.js
 var app = angular.module('votesApp', []);
-var socket = io.connect();
 
-app.controller('resultsCtrl', function($scope) {
-  $scope.votingPairs = [];  // Array to hold multiple voting pairs
-
-  var updateScores = function() {
-    socket.on('scores', function(json) {
-      var data = JSON.parse(json);
-      // Sample data structure to keep track of multiple voting pairs
-      // You can modify this based on your backend response format
-      $scope.votingPairs = [
+// Controller for handling voting results
+app.controller('resultsCtrl', ['$scope', function($scope) {
+    // Example voting data - replace this with your actual voting data
+    $scope.votingPairs = [
         {
-          optionA: "Beaches",
-          optionB: "Mountains",
-          votesA: parseInt(data.beaches || 0),
-          votesB: parseInt(data.mountains || 0),
+            optionA: 'CATS',
+            optionB: 'DOGS',
+            percentA: 50.0, // Percentage of votes for option A
+            percentB: 50.0, // Percentage of votes for option B
+            total: 0 // Total votes for this pair
         },
         {
-          optionA: "Fiction",
-          optionB: "Non-Fiction",
-          votesA: parseInt(data.fiction || 0),
-          votesB: parseInt(data.nonFiction || 0),
-        }
+            optionA: 'BEACHES',
+            optionB: 'MOUNTAINS',
+            percentA: 70.0, // Percentage of votes for option A
+            percentB: 30.0, // Percentage of votes for option B
+            total: 10 // Total votes for this pair
+        },
+        {
+            optionA: 'FICTION',
+            optionB: 'NON-FICTION',
+            percentA: 40.0,
+            percentB: 60.0,
+            total: 5
+        },
         // Add more pairs as needed
-      ];
+    ];
 
-      // Calculate percentages and total votes for each pair
-      $scope.votingPairs.forEach(function(pair) {
-        var totalVotes = pair.votesA + pair.votesB;
-        pair.total = totalVotes;
-        pair.percentA = totalVotes > 0 ? Math.round(pair.votesA / totalVotes * 100) : 50;
-        pair.percentB = totalVotes > 0 ? Math.round(pair.votesB / totalVotes * 100) : 50;
-      });
-      
-      $scope.$apply();  // Update the scope
+    // Optionally, you can fetch voting data from a server using $http or WebSocket
+    // For example, to get voting results from a server:
+    /*
+    $http.get('/api/voting-results').then(function(response) {
+        $scope.votingPairs = response.data;
     });
-  };
-
-  var init = function() {
-    document.body.style.opacity = 1;
-    updateScores();
-  };
-  
-  socket.on('message', function(data) {
-    init();
-  });
-});
+    */
+}]);
