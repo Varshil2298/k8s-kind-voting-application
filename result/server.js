@@ -2,6 +2,7 @@ var express = require('express'),
     async = require('async'),
     { Pool } = require('pg'),
     cookieParser = require('cookie-parser'),
+    path = require('path'), // Added this for resolving paths
     app = express(),
     server = require('http').Server(app),
     io = require('socket.io')(server);
@@ -9,9 +10,7 @@ var express = require('express'),
 var port = process.env.PORT || 4000;
 
 io.on('connection', function (socket) {
-
   socket.emit('message', { text : 'Welcome!' });
-
   socket.on('subscribe', function (data) {
     socket.join(data.channel);
   });
@@ -53,11 +52,26 @@ function getVotes(client) {
   });
 }
 
+// Update this function to handle all possible vote options dynamically
 function collectVotesFromResult(result) {
-  var votes = {a: 0, b: 0};
+  var votes = {
+    cats: 0,
+    dogs: 0,
+    beaches: 0,
+    mountains: 0,
+    dragons: 0,
+    unicorns: 0,
+    fiction: 0,
+    nonfiction: 0,
+    movies: 0,
+    tvshows: 0
+  };
 
+  // Update the votes based on result from the database
   result.rows.forEach(function (row) {
-    votes[row.vote] = parseInt(row.count);
+    if (votes.hasOwnProperty(row.vote)) {
+      votes[row.vote] = parseInt(row.count);
+    }
   });
 
   return votes;
