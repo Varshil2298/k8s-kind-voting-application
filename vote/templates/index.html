@@ -52,6 +52,12 @@
       .emoji {
         font-size: 1.5em;
       }
+      .description {
+        margin-top: 20px;
+        font-size: 1.3em;
+        color: #333;
+        display: none; /* Initially hide the description */
+      }
     </style>
   </head>
   <body>
@@ -71,6 +77,8 @@
       <div id="hostname">
         Processed by container ID {{hostname}}
       </div>
+      <!-- Description will appear here after the vote -->
+      <div id="description" class="description"></div>
     </div>
     <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
@@ -78,16 +86,37 @@
     {% if vote %}
     <script>
       var vote = "{{vote}}";
+      
+      // Descriptions for cats and dogs
+      var catDescription = "Cats are independent and curious creatures, known for their graceful and agile movements.";
+      var dogDescription = "Dogs are loyal and social animals, often called man's best friend for their companionship and loyalty.";
 
+      // Function to speak the description using Web Speech API
+      function speakDescription(description) {
+        if ('speechSynthesis' in window) {
+          var speech = new SpeechSynthesisUtterance(description);
+          speech.lang = 'en-US';
+          speech.rate = 1; // Set the speed of the speech
+          window.speechSynthesis.speak(speech);
+        }
+      }
+
+      // Display and speak the appropriate description based on the vote
       if(vote == "a"){
         $(".a").prop('disabled', true);
         $(".a").html('<span class="emoji">🐱</span> {{option_a}} <i class="fa fa-check-circle"></i>');
         $(".b").css('opacity', '0.5');
+        $("#description").text(catDescription); // Show cat description
+        $("#description").fadeIn(); // Make description visible
+        speakDescription(catDescription); // Speak the cat description
       }
       if(vote == "b"){
         $(".b").prop('disabled', true);
         $(".b").html('<span class="emoji">🐶</span> {{option_b}} <i class="fa fa-check-circle"></i>');
         $(".a").css('opacity', '0.5');
+        $("#description").text(dogDescription); // Show dog description
+        $("#description").fadeIn(); // Make description visible
+        speakDescription(dogDescription); // Speak the dog description
       }
     </script>
     {% endif %}
