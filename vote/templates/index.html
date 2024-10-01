@@ -53,17 +53,6 @@
         .emoji {
             font-size: 1.2em; /* Smaller emojis */
         }
-        .description {
-            margin-top: 20px;
-            font-size: 0.8em; /* Smaller font for descriptions */
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-            padding: 10px;
-            width: 50%;
-            margin: 20px auto;
-            display: none; /* Hidden by default */
-        }
         .center-container {
             display: flex;
             justify-content: center;
@@ -88,14 +77,6 @@
             </form>
         </div>
 
-        <!-- Initially hidden descriptions -->
-        <div id="cat-description" class="description">
-            About Cats: Cats are independent, playful, and curious creatures!
-        </div>
-        <div id="dog-description" class="description">
-            About Dogs: Dogs are loyal, friendly, and social animals!
-        </div>
-
         <div id="tip">
             (Tip: you can change your vote)
         </div>
@@ -108,32 +89,25 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
     <script>
-        // Hide both descriptions on page load
-        $("#cat-description").hide();
-        $("#dog-description").hide();
-
         // Event listener for form submission (vote)
         $("form").on("submit", function(event) {
             event.preventDefault(); // Prevent form submission and page refresh
 
             var vote = $(this).find("button[type='submit']:focus").val(); // Get the selected vote
 
-            // Reset the buttons and descriptions
+            // Reset the buttons
             $(".button").prop('disabled', false).css('opacity', '1').find(".fa-check-circle").remove();
-            $("#cat-description, #dog-description").hide();
 
             // Handle the vote for option A (Cats)
             if (vote === "a") {
                 $(".a").prop('disabled', true).html('<span class="emoji">🐱</span> {{ option_a }} <i class="fa fa-check-circle"></i>');
                 $(".b").css('opacity', '0.5');
-                $("#cat-description").fadeIn(); // Show cat description after vote
             }
 
             // Handle the vote for option B (Dogs)
             if (vote === "b") {
                 $(".b").prop('disabled', true).html('<span class="emoji">🐶</span> {{ option_b }} <i class="fa fa-check-circle"></i>');
                 $(".a").css('opacity', '0.5');
-                $("#dog-description").fadeIn(); // Show dog description after vote
             }
         });
     </script>
