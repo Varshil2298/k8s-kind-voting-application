@@ -20,6 +20,7 @@
         h3 {
             font-size: 2em;
             margin-bottom: 20px;
+            text-align: center; /* Center the heading */
         }
         .button {
             padding: 15px 30px;
@@ -54,32 +55,45 @@
         }
         .description {
             margin-top: 10px;
-            font-size: 0.9em; /* Smaller font for descriptions */
+            font-size: 0.8em; /* Smaller font for descriptions */
             border: 1px solid #ccc;
             border-radius: 5px;
             background-color: #f9f9f9;
             padding: 5px;
+            width: 50%;
+            margin: 10px auto;
             display: none; /* Hidden by default */
+        }
+        .center-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
     </style>
 </head>
 <body>
     <div id="content-container">
         <h3>{{ option_a }} vs {{ option_b }}!</h3>
-        <form id="choice" name='form' method="POST" action="/">
-            <button id="a" type="submit" name="vote" class="button a" value="a">
-                <span class="emoji">🐱</span> {{ option_a }}
-            </button>
-            <div id="cat-description" class="description">
-                About Cats: Cats are independent, playful, and curious creatures!
-            </div>
-            <button id="b" type="submit" name="vote" class="button b" value="b">
-                <span class="emoji">🐶</span> {{ option_b }}
-            </button>
-            <div id="dog-description" class="description">
-                About Dogs: Dogs are loyal, friendly, and social animals!
-            </div>
-        </form>
+
+        <!-- Centering the vote buttons in a container -->
+        <div class="center-container">
+            <form id="choice" name='form' method="POST" action="/">
+                <button id="a" type="submit" name="vote" class="button a" value="a">
+                    <span class="emoji">🐱</span> {{ option_a }}
+                </button>
+                <button id="b" type="submit" name="vote" class="button b" value="b">
+                    <span class="emoji">🐶</span> {{ option_b }}
+                </button>
+            </form>
+        </div>
+
+        <div id="cat-description" class="description">
+            About Cats: Cats are independent, playful, and curious creatures!
+        </div>
+        <div id="dog-description" class="description">
+            About Dogs: Dogs are loyal, friendly, and social animals!
+        </div>
+
         <div id="tip">
             (Tip: you can change your vote)
         </div>
@@ -87,6 +101,7 @@
             Processed by container ID {{ hostname }}
         </div>
     </div>
+
     <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
@@ -94,18 +109,22 @@
     <script>
         var vote = "{{ vote }}";
 
-        // Display the selected vote and its description
+        // Hide both descriptions on page load
+        $("#cat-description").hide();
+        $("#dog-description").hide();
+
+        // Display the selected vote's description only after voting
         if (vote == "a") {
             $(".a").prop('disabled', true);
             $(".a").html('<span class="emoji">🐱</span> {{ option_a }} <i class="fa fa-check-circle"></i>');
             $(".b").css('opacity', '0.5');
-            $("#cat-description").show(); // Show cat description
+            $("#cat-description").fadeIn(); // Show cat description after voting
         }
         if (vote == "b") {
             $(".b").prop('disabled', true);
             $(".b").html('<span class="emoji">🐶</span> {{ option_b }} <i class="fa fa-check-circle"></i>');
             $(".a").css('opacity', '0.5');
-            $("#dog-description").show(); // Show dog description
+            $("#dog-description").fadeIn(); // Show dog description after voting
         }
     </script>
     {% endif %}
