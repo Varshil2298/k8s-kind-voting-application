@@ -1,37 +1,46 @@
 <!DOCTYPE html>
-<html ng-app="votingApp">
+<html ng-app="catsvsdogs">
   <head>
     <meta charset="utf-8">
-    <title>Voting Results</title>
+    <title>Cats vs Dogs -- Result</title>
     <base href="/index.html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="voting, results">
-    <meta name="author" content="Your Name">
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <meta name="keywords" content="docker-compose, docker, stack">
+    <meta name="author" content="Docker">
+    <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
   <body ng-controller="statsCtrl">
-    <div id="background-stats">
-      <div id="background-stats-1"></div>
-      <div id="background-stats-2"></div>
-    </div>
+     <div id="background-stats">
+       <div id="background-stats-1"></div><!--
+       --><div id="background-stats-2"></div>
+     </div>
+     
+    <!-- Cats vs Dogs Section -->
     <div id="content-container">
       <div id="content-container-center">
-
-        <!-- Voting Pair 1: Cats vs Dogs -->
-        <div class="choice-pair">
+        <div id="choice">
           <div class="choice cats">
             <div class="label">Cats</div>
-            <div class="stat">{{catsPercent | number:1}}%</div>
+            <div class="stat">{{aPercent | number:1}}%</div>
           </div>
           <div class="divider"></div>
           <div class="choice dogs">
             <div class="label">Dogs</div>
-            <div class="stat">{{dogsPercent | number:1}}%</div>
+            <div class="stat">{{bPercent | number:1}}%</div>
           </div>
         </div>
+      </div>
+    </div>
+    <div id="result">
+      <span ng-if="total == 0">No votes yet</span>
+      <span ng-if="total == 1">{{total}} vote</span>
+      <span ng-if="total >= 2">{{total}} votes</span>
+    </div>
 
-        <!-- Voting Pair 2: Mountains vs Beaches -->
-        <div class="choice-pair">
+    <!-- Mountains vs Beaches Section -->
+    <div id="content-container">
+      <div id="content-container-center">
+        <div id="choice">
           <div class="choice mountains">
             <div class="label">Mountains</div>
             <div class="stat">{{mountainsPercent | number:1}}%</div>
@@ -42,29 +51,15 @@
             <div class="stat">{{beachesPercent | number:1}}%</div>
           </div>
         </div>
-
-        <!-- Repeat similar blocks for additional voting pairs -->
-        <div class="choice-pair">
-          <div class="choice option1">
-            <div class="label">Option 1</div>
-            <div class="stat">{{option1Percent | number:1}}%</div>
-          </div>
-          <div class="divider"></div>
-          <div class="choice option2">
-            <div class="label">Option 2</div>
-            <div class="stat">{{option2Percent | number:1}}%</div>
-          </div>
-        </div>
-
-        <!-- Add more voting pairs as needed -->
-
       </div>
     </div>
     <div id="result">
-      <span ng-if="totalVotes == 0">No votes yet</span>
-      <span ng-if="totalVotes == 1">{{totalVotes}} vote</span>
-      <span ng-if="totalVotes >= 2">{{totalVotes}} votes</span>
+      <span ng-if="total == 0">No votes yet</span>
+      <span ng-if="total == 1">{{total}} vote</span>
+      <span ng-if="total >= 2">{{total}} votes</span>
     </div>
+
+    <!-- Scripts -->
     <script src="socket.io.js"></script>
     <script src="angular.min.js"></script>
     <script src="app.js"></script>
