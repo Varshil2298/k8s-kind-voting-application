@@ -1,47 +1,50 @@
-// app.js
-angular.module('catsvsdogs', [])
-.controller('statsCtrl', ['$scope', function($scope) {
-    // Example data structure for votes
-    $scope.votingPairs = [
-        {
-            optionA: 'CATS',
-            optionB: 'DOGS',
-            total: 100,
-            votesA: 50,
-            votesB: 50
-        },
-        {
-            optionA: 'BEACHES',
-            optionB: 'MOUNTAINS',
-            total: 100,
-            votesA: 70,
-            votesB: 30
-        },
-        {
-            optionA: 'FICTION',
-            optionB: 'NON-FICTION',
-            total: 100,
-            votesA: 40,
-            votesB: 60
-        }
-    ];
+var app = angular.module('catsvsdogs', []);
+var socket = io.connect();
 
-    // Function to calculate percentages
-    $scope.calculatePercentages = function(pair) {
-        pair.aPercent = (pair.votesA / pair.total) * 100 || 0;
-        pair.bPercent = (pair.votesB / pair.total) * 100 || 0;
-    };
+var bg1 = document.getElementById('background-stats-1');
+var bg2 = document.getElementById('background-stats-2');
 
-    // Loop through each voting pair to calculate percentages
-    $scope.votingPairs.forEach(function(pair) {
-        $scope.calculatePercentages(pair);
+app.controller('statsCtrl', function($scope){
+  $scope.aPercent = 50;
+  $scope.bPercent = 50;
+
+  var updateScores = function(){
+    socket.on('scores', function (json) {
+       data = JSON.parse(json);
+       var a = parseInt(data.a || 0);
+       var b = parseInt(data.b || 0);
+
+       var percentages = getPercentages(a, b);
+
+       bg1.style.width = percentages.a + "%";
+       bg2.style.width = percentages.b + "%";
+
+       $scope.$apply(function () {
+         $scope.aPercent = percentages.a;
+         $scope.bPercent = percentages.b;
+         $scope.total = a + b;
+       });
     });
+  };
 
-    // Calculate total votes across all pairs
-    $scope.total = $scope.votingPairs.reduce((acc, pair) => acc + pair.total, 0);
-    
-    // Assigning values for Cats vs. Dogs specifically for the result section
-    const catsDogsPair = $scope.votingPairs[0];
-    $scope.aPercent = (catsDogsPair.votesA / catsDogsPair.total) * 100 || 0;
-    $scope.bPercent = (catsDogsPair.votesB / catsDogsPair.total) * 100 || 0;
-}]);
+  var init = function(){
+    document.body.style.opacity=1;
+    updateScores();
+  };
+  socket.on('message',function(data){
+    init();
+  });
+});
+
+function getPercentages(a, b) {
+  var result = {};
+
+  if (a + b > 0) {
+    result.a = Math.round(a / (a + b) * 100);
+    result.b = 100 - result.a;
+  } else {
+    result.a = result.b = 50;
+  }
+
+  return result;
+}
