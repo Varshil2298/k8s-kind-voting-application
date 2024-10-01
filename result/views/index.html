@@ -4,20 +4,21 @@
     <meta charset="utf-8">
     <title>Cats vs Dogs -- Result</title>
     <base href="/index.html">
-    <meta name = "viewport" content = "width=device-width, initial-scale = 1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="docker-compose, docker, stack">
     <meta name="author" content="Docker">
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
-  <body ng-controller="statsCtrl" >
+  <body ng-controller="statsCtrl">
      <div id="background-stats">
-       <div id="background-stats-1">
-       </div><!--
-      --><div id="background-stats-2">
-      </div>
+       <div id="background-stats-1"></div><!--
+      --><div id="background-stats-2"></div>
     </div>
+
     <div id="content-container">
       <div id="content-container-center">
+
+        <!-- Pair 1: Cats vs Dogs -->
         <div id="choice">
           <div class="choice cats">
             <div class="label">Cats</div>
@@ -29,13 +30,68 @@
             <div class="stat">{{bPercent | number:1}}%</div>
           </div>
         </div>
+
+        <!-- Pair 2: Beaches vs Mountains -->
+        <div id="choice">
+          <div class="choice beaches">
+            <div class="label">Beaches</div>
+            <div class="stat">{{beachesPercent | number:1}}%</div>
+          </div>
+          <div class="divider"></div>
+          <div class="choice mountains">
+            <div class="label">Mountains</div>
+            <div class="stat">{{mountainsPercent | number:1}}%</div>
+          </div>
+        </div>
+
+        <!-- Pair 3: Dragons vs Unicorns -->
+        <div id="choice">
+          <div class="choice dragons">
+            <div class="label">Dragons</div>
+            <div class="stat">{{dragonsPercent | number:1}}%</div>
+          </div>
+          <div class="divider"></div>
+          <div class="choice unicorns">
+            <div class="label">Unicorns</div>
+            <div class="stat">{{unicornsPercent | number:1}}%</div>
+          </div>
+        </div>
+
+        <!-- Pair 4: Fiction vs Non-Fiction -->
+        <div id="choice">
+          <div class="choice fiction">
+            <div class="label">Fiction</div>
+            <div class="stat">{{fictionPercent | number:1}}%</div>
+          </div>
+          <div class="divider"></div>
+          <div class="choice nonfiction">
+            <div class="label">Non-Fiction</div>
+            <div class="stat">{{nonfictionPercent | number:1}}%</div>
+          </div>
+        </div>
+
+        <!-- Pair 5: Movies vs TV Shows -->
+        <div id="choice">
+          <div class="choice movies">
+            <div class="label">Movies</div>
+            <div class="stat">{{moviesPercent | number:1}}%</div>
+          </div>
+          <div class="divider"></div>
+          <div class="choice tvshows">
+            <div class="label">TV Shows</div>
+            <div class="stat">{{tvshowsPercent | number:1}}%</div>
+          </div>
+        </div>
+
       </div>
     </div>
+
     <div id="result">
       <span ng-if="total == 0">No votes yet</span>
       <span ng-if="total == 1">{{total}} vote</span>
       <span ng-if="total >= 2">{{total}} votes</span>
     </div>
+
     <script src="socket.io.js"></script>
     <script src="angular.min.js"></script>
     <script src="app.js"></script>
