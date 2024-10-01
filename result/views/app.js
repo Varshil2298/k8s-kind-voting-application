@@ -1,39 +1,47 @@
 // app.js
-var app = angular.module('votesApp', []);
-
-// Controller for handling voting results
-app.controller('resultsCtrl', ['$scope', function($scope) {
-    // Example voting data - replace this with your actual voting data
+angular.module('catsvsdogs', [])
+.controller('statsCtrl', ['$scope', function($scope) {
+    // Example data structure for votes
     $scope.votingPairs = [
         {
             optionA: 'CATS',
             optionB: 'DOGS',
-            percentA: 50.0, // Percentage of votes for option A
-            percentB: 50.0, // Percentage of votes for option B
-            total: 0 // Total votes for this pair
+            total: 100,
+            votesA: 50,
+            votesB: 50
         },
         {
             optionA: 'BEACHES',
             optionB: 'MOUNTAINS',
-            percentA: 70.0, // Percentage of votes for option A
-            percentB: 30.0, // Percentage of votes for option B
-            total: 10 // Total votes for this pair
+            total: 100,
+            votesA: 70,
+            votesB: 30
         },
         {
             optionA: 'FICTION',
             optionB: 'NON-FICTION',
-            percentA: 40.0,
-            percentB: 60.0,
-            total: 5
-        },
-        // Add more pairs as needed
+            total: 100,
+            votesA: 40,
+            votesB: 60
+        }
     ];
 
-    // Optionally, you can fetch voting data from a server using $http or WebSocket
-    // For example, to get voting results from a server:
-    /*
-    $http.get('/api/voting-results').then(function(response) {
-        $scope.votingPairs = response.data;
+    // Function to calculate percentages
+    $scope.calculatePercentages = function(pair) {
+        pair.aPercent = (pair.votesA / pair.total) * 100 || 0;
+        pair.bPercent = (pair.votesB / pair.total) * 100 || 0;
+    };
+
+    // Loop through each voting pair to calculate percentages
+    $scope.votingPairs.forEach(function(pair) {
+        $scope.calculatePercentages(pair);
     });
-    */
+
+    // Calculate total votes across all pairs
+    $scope.total = $scope.votingPairs.reduce((acc, pair) => acc + pair.total, 0);
+    
+    // Assigning values for Cats vs. Dogs specifically for the result section
+    const catsDogsPair = $scope.votingPairs[0];
+    $scope.aPercent = (catsDogsPair.votesA / catsDogsPair.total) * 100 || 0;
+    $scope.bPercent = (catsDogsPair.votesB / catsDogsPair.total) * 100 || 0;
 }]);
