@@ -1,50 +1,48 @@
-var app = angular.module('catsvsdogs', []);
+var app = angular.module('votesApp', []);
 var socket = io.connect();
 
-var bg1 = document.getElementById('background-stats-1');
-var bg2 = document.getElementById('background-stats-2');
+app.controller('resultsCtrl', function($scope) {
+  $scope.votingPairs = [];  // Array to hold multiple voting pairs
 
-app.controller('statsCtrl', function($scope){
-  $scope.aPercent = 50;
-  $scope.bPercent = 50;
+  var updateScores = function() {
+    socket.on('scores', function(json) {
+      var data = JSON.parse(json);
+      // Sample data structure to keep track of multiple voting pairs
+      // You can modify this based on your backend response format
+      $scope.votingPairs = [
+        {
+          optionA: "Beaches",
+          optionB: "Mountains",
+          votesA: parseInt(data.beaches || 0),
+          votesB: parseInt(data.mountains || 0),
+        },
+        {
+          optionA: "Fiction",
+          optionB: "Non-Fiction",
+          votesA: parseInt(data.fiction || 0),
+          votesB: parseInt(data.nonFiction || 0),
+        }
+        // Add more pairs as needed
+      ];
 
-  var updateScores = function(){
-    socket.on('scores', function (json) {
-       data = JSON.parse(json);
-       var a = parseInt(data.a || 0);
-       var b = parseInt(data.b || 0);
-
-       var percentages = getPercentages(a, b);
-
-       bg1.style.width = percentages.a + "%";
-       bg2.style.width = percentages.b + "%";
-
-       $scope.$apply(function () {
-         $scope.aPercent = percentages.a;
-         $scope.bPercent = percentages.b;
-         $scope.total = a + b;
-       });
+      // Calculate percentages and total votes for each pair
+      $scope.votingPairs.forEach(function(pair) {
+        var totalVotes = pair.votesA + pair.votesB;
+        pair.total = totalVotes;
+        pair.percentA = totalVotes > 0 ? Math.round(pair.votesA / totalVotes * 100) : 50;
+        pair.percentB = totalVotes > 0 ? Math.round(pair.votesB / totalVotes * 100) : 50;
+      });
+      
+      $scope.$apply();  // Update the scope
     });
   };
 
-  var init = function(){
-    document.body.style.opacity=1;
+  var init = function() {
+    document.body.style.opacity = 1;
     updateScores();
   };
-  socket.on('message',function(data){
+  
+  socket.on('message', function(data) {
     init();
   });
 });
-
-function getPercentages(a, b) {
-  var result = {};
-
-  if (a + b > 0) {
-    result.a = Math.round(a / (a + b) * 100);
-    result.b = 100 - result.a;
-  } else {
-    result.a = result.b = 50;
-  }
-
-  return result;
-}
