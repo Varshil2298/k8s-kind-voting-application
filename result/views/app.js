@@ -1,41 +1,57 @@
-var app = angular.module('catsvsdogs', []);
+var app = angular.module('votingApp', []);
 var socket = io.connect();
 
 var bg1 = document.getElementById('background-stats-1');
 var bg2 = document.getElementById('background-stats-2');
 
 app.controller('statsCtrl', function($scope){
-  $scope.aPercent = 50;
-  $scope.bPercent = 50;
+  // Initialize percentage values for multiple voting pairs
+  $scope.catsPercent = 50;
+  $scope.dogsPercent = 50;
+  $scope.mountainsPercent = 50;
+  $scope.beachesPercent = 50;
+  // Initialize total votes
+  $scope.totalVotes = 0;
 
   var updateScores = function(){
     socket.on('scores', function (json) {
        data = JSON.parse(json);
-       var a = parseInt(data.a || 0);
-       var b = parseInt(data.b || 0);
+       var cats = parseInt(data.cats || 0);
+       var dogs = parseInt(data.dogs || 0);
+       var mountains = parseInt(data.mountains || 0);
+       var beaches = parseInt(data.beaches || 0);
 
-       var percentages = getPercentages(a, b);
+       // Get percentages for each pair
+       var catDogPercentages = getPercentages(cats, dogs);
+       var mountainBeachPercentages = getPercentages(mountains, beaches);
 
-       bg1.style.width = percentages.a + "%";
-       bg2.style.width = percentages.b + "%";
+       // Update background widths for visual representation
+       bg1.style.width = catDogPercentages.a + "%"; // For Cats
+       bg2.style.width = catDogPercentages.b + "%"; // For Dogs
 
+       // Update the scope variables
        $scope.$apply(function () {
-         $scope.aPercent = percentages.a;
-         $scope.bPercent = percentages.b;
-         $scope.total = a + b;
+         $scope.catsPercent = catDogPercentages.a;
+         $scope.dogsPercent = catDogPercentages.b;
+         $scope.mountainsPercent = mountainBeachPercentages.a;
+         $scope.beachesPercent = mountainBeachPercentages.b;
+         // Total votes for all pairs
+         $scope.totalVotes = cats + dogs + mountains + beaches;
        });
     });
   };
 
   var init = function(){
-    document.body.style.opacity=1;
+    document.body.style.opacity = 1;
     updateScores();
   };
-  socket.on('message',function(data){
+
+  socket.on('message', function(data){
     init();
   });
 });
 
+// Function to calculate percentages
 function getPercentages(a, b) {
   var result = {};
 
