@@ -11,68 +11,55 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <style>
         body {
+            background-color: #f0f8ff;
             font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
-            color: #333;
             text-align: center;
-        }
-        #content-container {
-            margin: 20px auto;
+            margin: 0;
             padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            width: 90%;
-            max-width: 600px;
         }
         h3 {
+            font-size: 2em;
             margin-bottom: 20px;
         }
-        .option {
-            margin: 20px 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .emoji {
-            font-size: 3em;
-            margin-right: 10px;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 1.2em;
-            cursor: pointer;
+        .button {
+            padding: 15px 30px;
+            font-size: 1.5em;
+            margin: 10px;
             border: none;
             border-radius: 5px;
-            transition: background-color 0.3s;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
         .a {
-            background-color: #4CAF50; /* Green */
-            color: white;
+            background-color: #add8e6; /* Light Blue */
         }
         .b {
-            background-color: #2196F3; /* Blue */
-            color: white;
+            background-color: #90ee90; /* Light Green */
         }
-        button:hover {
-            opacity: 0.8;
-        }
-        .description {
-            margin-top: 10px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-            display: none; /* Hidden by default */
+        .button:hover {
+            filter: brightness(1.1);
         }
         #tip {
-            margin-top: 15px;
-            font-size: 0.9em;
+            margin-top: 20px;
+            font-size: 1.2em;
             color: #555;
         }
         #hostname {
-            margin-top: 20px;
-            font-style: italic;
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #888;
+        }
+        .emoji {
+            font-size: 1.2em; /* Smaller emojis */
+        }
+        .description {
+            margin-top: 10px;
+            font-size: 0.9em; /* Smaller font for descriptions */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            padding: 5px;
+            display: none; /* Hidden by default */
         }
     </style>
 </head>
@@ -80,19 +67,17 @@
     <div id="content-container">
         <h3>{{ option_a }} vs {{ option_b }}!</h3>
         <form id="choice" name='form' method="POST" action="/">
-            <div class="option" id="cat-option">
-                <span class="emoji">🐱</span>
-                <button id="a" type="submit" name="vote" class="a" value="a">{{ option_a }}</button>
-            </div>
-            <div class="option" id="dog-option">
-                <span class="emoji">🐶</span>
-                <button id="b" type="submit" name="vote" class="b" value="b">{{ option_b }}</button>
-            </div>
+            <button id="a" type="submit" name="vote" class="button a" value="a">
+                <span class="emoji">🐱</span> {{ option_a }}
+            </button>
             <div id="cat-description" class="description">
-                <strong>About Cats:</strong> Cats are independent, playful, and curious creatures! They are known for their agility and ability to purr.
+                About Cats: Cats are independent, playful, and curious creatures!
             </div>
+            <button id="b" type="submit" name="vote" class="button b" value="b">
+                <span class="emoji">🐶</span> {{ option_b }}
+            </button>
             <div id="dog-description" class="description">
-                <strong>About Dogs:</strong> Dogs are loyal, friendly, and social animals! They are known for their companionship and protective nature.
+                About Dogs: Dogs are loyal, friendly, and social animals!
             </div>
         </form>
         <div id="tip">
@@ -112,13 +97,13 @@
         // Display the selected vote and its description
         if (vote == "a") {
             $(".a").prop('disabled', true);
-            $(".a").html('{{ option_a }} <i class="fa fa-check-circle"></i>');
+            $(".a").html('<span class="emoji">🐱</span> {{ option_a }} <i class="fa fa-check-circle"></i>');
             $(".b").css('opacity', '0.5');
             $("#cat-description").show(); // Show cat description
         }
         if (vote == "b") {
             $(".b").prop('disabled', true);
-            $(".b").html('{{ option_b }} <i class="fa fa-check-circle"></i>');
+            $(".b").html('<span class="emoji">🐶</span> {{ option_b }} <i class="fa fa-check-circle"></i>');
             $(".a").css('opacity', '0.5');
             $("#dog-description").show(); // Show dog description
         }
