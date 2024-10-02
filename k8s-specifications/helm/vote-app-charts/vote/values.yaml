@@ -5,7 +5,7 @@
 vote:
   image:
     repo: "volley123/vote-app"
-    tag: "11140175174"
+    tag: "11140591507"
     pullPolicy: IfNotPresent
   affinity: {}
   nodeSelector: {}
