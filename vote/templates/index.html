@@ -38,33 +38,40 @@
         cursor: pointer;
         transition: background-color 0.3s ease;
       }
+
       .a {
         background-color: #add8e6; /* Light Blue */
       }
+
       .b {
         background-color: #90ee90; /* Light Green */
       }
+
       .button:hover {
         filter: brightness(1.1);
       }
+
       #tip {
         margin-top: 20px;
         font-size: 1.2em;
         color: #555;
       }
+
       #hostname {
         margin-top: 10px;
         font-size: 0.9em;
         color: #888;
       }
+
       .emoji {
         font-size: 1.5em;
       }
+
       .description {
         margin-top: 20px;
         font-size: 1.3em;
         color: #333;
-        display: none; /* Initially hide the description */
+        display: none; /* Initially hidden */
       }
     </style>
   </head>
@@ -85,8 +92,7 @@
       <div id="hostname">
         Processed by container ID {{hostname}}
       </div>
-      <!-- Description will appear here after the vote -->
-      <div id="description" class="description"></div>
+      <div id="description" class="description"></div> <!-- Initially hidden -->
     </div>
 
     <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
@@ -108,37 +114,51 @@
       }
 
       $(document).ready(function() {
-        // Disable vote buttons initially, no tick marks or descriptions are visible
-        $(".a, .b").prop('disabled', false);
-        $(".a").html('<span class="emoji">🐱</span> {{option_a}}');
-        $(".b").html('<span class="emoji">🐶</span> {{option_b}}');
-        $("#description").hide(); // Ensure description is hidden on load
+        // Ensure description is hidden on load
+        $("#description").hide();
 
-        // Check if there's an existing vote
-        {% if vote %}
-          // If a vote exists, update the page based on the vote
-          var vote = "{{vote}}";
+        // Initialize vote state to 'no vote'
+        var vote = $.cookie('vote'); // Check for a previously saved vote in cookies
+
+        // Logic for first load - no vote selected
+        if (!vote) {
+          // Ensure buttons are enabled and no check marks
+          $(".a").html('<span class="emoji">🐱</span> {{option_a}}');
+          $(".b").html('<span class="emoji">🐶</span> {{option_b}}');
+        } else {
+          // If a vote exists in cookies, update the page to show selected vote
+          updateVoteUI(vote);
+        }
+
+        // Handle form submission (vote)
+        $('#choice').on('submit', function(event) {
+          event.preventDefault();
+          var selectedVote = $("input[name='vote']:checked").val(); // Capture vote value
+          $.cookie('vote', selectedVote); // Store vote in cookie
+
+          updateVoteUI(selectedVote);
+        });
+
+        // Function to update the UI after voting
+        function updateVoteUI(vote) {
+          // Reset both buttons first
+          $(".a, .b").prop('disabled', false).css('opacity', '1');
+          $("#description").hide();
 
           if (vote === "a") {
-            $(".a").prop('disabled', true);
             $(".a").html('<span class="emoji">🐱</span> {{option_a}} <i class="fa fa-check-circle" style="color: green;"></i>');
             $(".b").css('opacity', '0.5');
+            $(".a").prop('disabled', true);
             $("#description").text(catDescription).fadeIn();
             speakDescription(catDescription);
           } else if (vote === "b") {
-            $(".b").prop('disabled', true);
             $(".b").html('<span class="emoji">🐶</span> {{option_b}} <i class="fa fa-check-circle" style="color: green;"></i>');
             $(".a").css('opacity', '0.5');
+            $(".b").prop('disabled', true);
             $("#description").text(dogDescription).fadeIn();
             speakDescription(dogDescription);
           }
-        {% else %}
-          // On first page load with no vote, reset everything
-          $(".a, .b").prop('disabled', false); // Ensure both buttons are active
-          $(".a").html('<span class="emoji">🐱</span> {{option_a}}');
-          $(".b").html('<span class="emoji">🐶</span> {{option_b}}');
-          $("#description").hide(); // Keep description hidden
-        {% endif %}
+        }
       });
     </script>
   </body>
