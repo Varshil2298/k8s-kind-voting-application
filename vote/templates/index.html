@@ -1,107 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="utf-8">
     <title>{{option_a}} vs {{option_b}}!</title>
+    <base href="/index.html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel='stylesheet' href="{{ url_for('static', filename='stylesheets/style.css') }}">
+    <meta name="keywords" content="docker-compose, docker, stack">
+    <meta name="author" content="Tutum dev team">
+    <link rel='stylesheet' href="{{ url_for('static', filename='stylesheets/style.css') }}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <style>
-        body {
-            background-color: #f0f8ff;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-        }
-        h3 {
-            font-size: 2em;
-            margin-bottom: 20px;
-        }
-        .button {
-            padding: 15px 30px;
-            font-size: 1.5em;
-            margin: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .a {
-            background-color: #add8e6;
-        }
-        .b {
-            background-color: #90ee90;
-        }
-        .button:hover {
-            filter: brightness(1.1);
-        }
-        .button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        #description {
-            display: none;
-            margin-top: 20px;
-            font-size: 1.2em;
-            color: #555;
-        }
-        #hostname {
-            margin-top: 10px;
-            font-size: 0.9em;
-            color: #888;
-        }
-        .selected {
-            border: 3px solid #000;
-        }
-        .emoji {
-            margin-right: 10px;
-        }
+      body {
+        background-color: #f0f8ff;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 0;
+        padding: 20px;
+      }
+      h3 {
+        font-size: 2em;
+        margin-bottom: 20px;
+      }
+      .button {
+        padding: 15px 30px;
+        font-size: 1.5em;
+        margin: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      .a {
+        background-color: #add8e6; /* Light Blue */
+      }
+      .b {
+        background-color: #90ee90; /* Light Green */
+      }
+      .button:hover {
+        filter: brightness(1.1);
+      }
+      #tip {
+        margin-top: 20px;
+        font-size: 1.2em;
+        color: #555;
+      }
+      #hostname {
+        margin-top: 10px;
+        font-size: 0.9em;
+        color: #888;
+      }
+      .emoji {
+        font-size: 1.5em;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div id="content-container">
-        <h3>{{option_a}} vs {{option_b}}!</h3>
-        <form id="choice" name='form'>
-            <button id="a" type="button" class="button a" value="a">
-                <span class="emoji">🐱</span> {{option_a}}
-            </button>
-            <button id="b" type="button" class="button b" value="b">
-                <span class="emoji">🐶</span> {{option_b}}
-            </button>
-        </form>
-        <div id="tip">(Tip: you can vote for both options)</div>
-        <div id="description-a"></div>
-        <div id="description-b"></div>
-        <div id="hostname">
-            Processed by container ID {{hostname}}
-        </div>
+      <h3>{{option_a}} vs {{option_b}}!</h3>
+      <form id="choice" name='form' method="POST" action="/">
+        <button id="a" type="submit" name="vote" class="button a" value="a">
+          <span class="emoji">🐱</span> {{option_a}} 
+        </button>
+        <button id="b" type="submit" name="vote" class="button b" value="b">
+          <span class="emoji">🐶</span> {{option_b}} 
+        </button>
+      </form>
+      <div id="tip">
+        (Tip: you can change your vote)
+      </div>
+      <div id="hostname">
+        Processed by container ID {{hostname}}
+      </div>
     </div>
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
+    {% if vote %}
     <script>
-        $(document).ready(function() {
-            // Initially hide both descriptions
-            $("#description-a, #description-b").hide();
+      var vote = "{{vote}}";
 
-            // Handle click for option A (Cats)
-            $("#a").on("click", function() {
-                var descriptionA = "Cats are independent and graceful creatures, known for their agility and curiosity.";
-                $("#a").toggleClass('selected');
-                $("#description-a").text(descriptionA).toggle();
-                // Trigger text-to-speech for option A (Cats)
-                var speechA = new SpeechSynthesisUtterance(descriptionA);
-                window.speechSynthesis.speak(speechA);
-            });
-
-            // Handle click for option B (Dogs)
-            $("#b").on("click", function() {
-                var descriptionB = "Dogs are loyal and social animals, often called man's best friend for their companionship and loyalty.";
-                $("#b").toggleClass('selected');
-                $("#description-b").text(descriptionB).toggle();
-                // Trigger text-to-speech for option B (Dogs)
-                var speechB = new SpeechSynthesisUtterance(descriptionB);
-                window.speechSynthesis.speak(speechB);
-            });
-        });
+      if(vote == "a"){
+        $(".a").prop('disabled', true);
+        $(".a").html('<span class="emoji">🐱</span> {{option_a}} <i class="fa fa-check-circle"></i>');
+        $(".b").css('opacity', '0.5');
+      }
+      if(vote == "b"){
+        $(".b").prop('disabled', true);
+        $(".b").html('<span class="emoji">🐶</span> {{option_b}} <i class="fa fa-check-circle"></i>');
+        $(".a").css('opacity', '0.5');
+      }
     </script>
-</body>
+    {% endif %}
+  </body>
 </html>
