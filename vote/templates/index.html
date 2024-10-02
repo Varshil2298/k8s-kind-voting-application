@@ -114,8 +114,9 @@
         $(".b").html('<span class="emoji">🐶</span> {{option_b}}');
         $("#description").hide(); // Ensure description is hidden on load
 
+        // Check if there's an existing vote (use cookies or session to track vote)
         {% if vote %}
-          // If there is a vote, process it and show the correct button
+          // If a vote is present (after form submission)
           var vote = "{{vote}}";
 
           if (vote === "a") {
@@ -133,11 +134,11 @@
             speakDescription(dogDescription); // Speak the dog description
           }
         {% else %}
-          // If no vote, ensure buttons are enabled and no tick marks are shown
-          $(".a, .b").prop('disabled', false);
+          // Initial page load without any vote
+          $(".a, .b").prop('disabled', false); // Ensure buttons are enabled
           $(".a").html('<span class="emoji">🐱</span> {{option_a}}');
           $(".b").html('<span class="emoji">🐶</span> {{option_b}}');
-          $("#description").hide(); // Ensure description remains hidden
+          $("#description").hide(); // Ensure the description is hidden initially
         {% endif %}
       });
     </script>
