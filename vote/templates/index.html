@@ -68,8 +68,9 @@
                 <span class="emoji">🐶</span> {{option_b}}
             </button>
         </form>
-        <div id="tip">(Tip: you can change your vote)</div>
-        <div id="description"></div>
+        <div id="tip">(Tip: you can vote for both options)</div>
+        <div id="description-a"></div>
+        <div id="description-b"></div>
         <div id="hostname">
             Processed by container ID {{hostname}}
         </div>
@@ -78,37 +79,27 @@
 
     <script>
         $(document).ready(function() {
-            // Hides the description initially
-            $("#description").hide();
+            // Initially hide both descriptions
+            $("#description-a, #description-b").hide();
 
-            // Handle vote button click
-            $("button").on("click", function(event) {
-                event.preventDefault();
-                var selectedVote = $(this).val();
-                var descriptionText = "";
+            // Handle click for option A (Cats)
+            $("#a").on("click", function() {
+                var descriptionA = "Cats are independent and graceful creatures, known for their agility and curiosity.";
+                $("#a").toggleClass('selected');
+                $("#description-a").text(descriptionA).toggle();
+                // Trigger text-to-speech for option A (Cats)
+                var speechA = new SpeechSynthesisUtterance(descriptionA);
+                window.speechSynthesis.speak(speechA);
+            });
 
-                // Reset button states and tick mark
-                $("button").removeClass('selected');
-                $("button").prop('disabled', false);
-
-                // Handle vote selection
-                if (selectedVote == "a") {
-                    descriptionText = "Cats are independent and graceful creatures, known for their agility and curiosity.";
-                    $("#a").addClass('selected');
-                } else if (selectedVote == "b") {
-                    descriptionText = "Dogs are loyal and social animals, often called man's best friend for their companionship and loyalty.";
-                    $("#b").addClass('selected');
-                }
-
-                // Disable both buttons to prevent further voting
-                $("button").prop("disabled", true);
-
-                // Show description after voting
-                $("#description").text(descriptionText).show();
-
-                // Trigger text-to-speech
-                var speech = new SpeechSynthesisUtterance(descriptionText);
-                window.speechSynthesis.speak(speech);
+            // Handle click for option B (Dogs)
+            $("#b").on("click", function() {
+                var descriptionB = "Dogs are loyal and social animals, often called man's best friend for their companionship and loyalty.";
+                $("#b").toggleClass('selected');
+                $("#description-b").text(descriptionB).toggle();
+                // Trigger text-to-speech for option B (Dogs)
+                var speechB = new SpeechSynthesisUtterance(descriptionB);
+                window.speechSynthesis.speak(speechB);
             });
         });
     </script>
