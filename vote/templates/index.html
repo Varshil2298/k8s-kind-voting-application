@@ -108,37 +108,36 @@
       }
 
       $(document).ready(function() {
-        // Ensure buttons are enabled and no tick marks are shown initially
+        // Disable vote buttons initially, no tick marks or descriptions are visible
         $(".a, .b").prop('disabled', false);
         $(".a").html('<span class="emoji">🐱</span> {{option_a}}');
         $(".b").html('<span class="emoji">🐶</span> {{option_b}}');
         $("#description").hide(); // Ensure description is hidden on load
 
-        // Check if there's an existing vote (use cookies or session to track vote)
+        // Check if there's an existing vote
         {% if vote %}
-          // If a vote is present (after form submission)
+          // If a vote exists, update the page based on the vote
           var vote = "{{vote}}";
 
           if (vote === "a") {
             $(".a").prop('disabled', true);
-            $(".a").html('<span class="emoji">🐱</span> {{option_a}} <i class="fa fa-check-circle"></i>');
+            $(".a").html('<span class="emoji">🐱</span> {{option_a}} <i class="fa fa-check-circle" style="color: green;"></i>');
             $(".b").css('opacity', '0.5');
-            $("#description").text(catDescription).fadeIn(); // Show cat description
-            speakDescription(catDescription); // Speak the cat description
-          }
-          if (vote === "b") {
+            $("#description").text(catDescription).fadeIn();
+            speakDescription(catDescription);
+          } else if (vote === "b") {
             $(".b").prop('disabled', true);
-            $(".b").html('<span class="emoji">🐶</span> {{option_b}} <i class="fa fa-check-circle"></i>');
+            $(".b").html('<span class="emoji">🐶</span> {{option_b}} <i class="fa fa-check-circle" style="color: green;"></i>');
             $(".a").css('opacity', '0.5');
-            $("#description").text(dogDescription).fadeIn(); // Show dog description
-            speakDescription(dogDescription); // Speak the dog description
+            $("#description").text(dogDescription).fadeIn();
+            speakDescription(dogDescription);
           }
         {% else %}
-          // Initial page load without any vote
-          $(".a, .b").prop('disabled', false); // Ensure buttons are enabled
+          // On first page load with no vote, reset everything
+          $(".a, .b").prop('disabled', false); // Ensure both buttons are active
           $(".a").html('<span class="emoji">🐱</span> {{option_a}}');
           $(".b").html('<span class="emoji">🐶</span> {{option_b}}');
-          $("#description").hide(); // Ensure the description is hidden initially
+          $("#description").hide(); // Keep description hidden
         {% endif %}
       });
     </script>
