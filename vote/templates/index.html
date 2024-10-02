@@ -108,24 +108,28 @@
       }
 
       $(document).ready(function() {
+        // Ensure buttons are enabled and no tick marks are shown initially
+        $(".a, .b").prop('disabled', false);
+        $(".a").html('<span class="emoji">🐱</span> {{option_a}}');
+        $(".b").html('<span class="emoji">🐶</span> {{option_b}}');
+        $("#description").hide(); // Ensure description is hidden on load
+
         {% if vote %}
-          // Show the voted option and hide the other
+          // If there is a vote, process it and show the correct button
           var vote = "{{vote}}";
 
           if (vote === "a") {
             $(".a").prop('disabled', true);
             $(".a").html('<span class="emoji">🐱</span> {{option_a}} <i class="fa fa-check-circle"></i>');
             $(".b").css('opacity', '0.5');
-            $("#description").text(catDescription); // Show cat description
-            $("#description").fadeIn(); // Make description visible
+            $("#description").text(catDescription).fadeIn(); // Show cat description
             speakDescription(catDescription); // Speak the cat description
           }
           if (vote === "b") {
             $(".b").prop('disabled', true);
             $(".b").html('<span class="emoji">🐶</span> {{option_b}} <i class="fa fa-check-circle"></i>');
             $(".a").css('opacity', '0.5');
-            $("#description").text(dogDescription); // Show dog description
-            $("#description").fadeIn(); // Make description visible
+            $("#description").text(dogDescription).fadeIn(); // Show dog description
             speakDescription(dogDescription); // Speak the dog description
           }
         {% else %}
@@ -133,6 +137,7 @@
           $(".a, .b").prop('disabled', false);
           $(".a").html('<span class="emoji">🐱</span> {{option_a}}');
           $(".b").html('<span class="emoji">🐶</span> {{option_b}}');
+          $("#description").hide(); // Ensure description remains hidden
         {% endif %}
       });
     </script>
