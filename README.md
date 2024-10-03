@@ -18,12 +18,37 @@ This guide covers the steps to:
 - Set up the Kubernetes Dashboard.
 - Connect and manage your Kubernetes cluster with Argo CD.
 
+## Step-by-Step Commands Installation
+
+This guide provides the complete steps to set up and deploy the Vote App using a Kubernetes cluster created with Kind, along with continuous deployment using Argo CD with Helm charts
+
+(1) Kind Cluster Setup
+To set up a Kind Kubernetes cluster, follow the instructions in the Kind Cluster Setup Guide. [Kind Cluster Setup Guide](kind-cluster/commands.md).
+
+(2) Argo CD Setup
+For setting up Argo CD for continuous deployment, refer to the Argo CD Setup Guide. [Argo CD Setup Guide] (gitops/argocd/install.md).
+
+(3) Helm-Chart Setup
+For deploying the Vote App using Helm, configure the required Helm chart templates and values. [Helm Chart Setup Guide](helm-commands/helm.md).
+
+(4) Kubernetes Setup using kubectl
+To manage your Kubernetes cluster and deploy applications using kubectl, check out the [Kind Cluster Setup Guide](k8-commands/k8s-commands.md).
+
+(5) Kubernetes Dashboard Setup
+To set up the Kubernetes Dashboard for monitoring and managing your cluster
+[Kubernetes Dashboard Setup Guide](kubernetes-dashboard/dashboard.md).
+
+## Github Action Pipeline Workflows Folder structure
+
+To create the workflows for each microservices mainly three cicd are required i.e results,vote and worker, check out the [Github workflow](.github/workflows/).
+
+
 ## Creating the helm charts 
 
 To create the chart run the following command:
 
 ```bash
-helm create vote-app-charts
+helm create vote-app-charts 
  ```
 
 The main files are needed here are only:
