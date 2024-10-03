@@ -26,7 +26,7 @@ This guide provides the complete steps to set up and deploy the Vote App using a
 To set up a Kind Kubernetes cluster, follow the instructions in the Kind Cluster Setup Guide. [Kind Cluster Setup Guide](kind-cluster/commands.md).
 
 (2) Argo CD Setup
-For setting up Argo CD for continuous deployment, refer to the Argo CD Setup Guide. [Argo CD Setup Guide] (gitops/argocd/install.md).
+For setting up Argo CD for continuous deployment, refer to the Argo CD Setup Guide. [Argo CD Setup Guide](gitops/argocd/install.md).
 
 (3) Helm-Chart Setup
 For deploying the Vote App using Helm, configure the required Helm chart templates and values. [Helm Chart Setup Guide](helm-commands/helm.md).
