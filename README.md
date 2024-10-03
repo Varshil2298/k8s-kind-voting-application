@@ -20,13 +20,18 @@ This guide covers the steps to:
 
 ## Creating the helm charts 
 
-To create the chart run the following command
+To create the chart run the following command:
 
-```helm create vote-app-charts ```
+```bash
+helm create vote-app-charts
+ ```
 
-The main files are needed here are only
+The main files are needed here are only:
+
 - templates folder : These directory contains all the Kubernetes resource definitions that Helm uses to deploy the application. These are the raw Kubernetes manifests (such as Deployments, Services, ConfigMaps, Ingress, etc.), but with templating enabled. This folder is crucial for defining how the application should be deployed in the Kubernetes cluster.
+
 - Chart.yaml : This file provides metadata about the Helm chart, including its name, version, description, and optional dependencies. It acts as the central configuration file for Helm to understand what this chart is and how it should behave.
+
 - values.yaml: The values.yaml file contains default configuration values for the Helm chart. You can customize this file to provide specific values for the various templates defined in the templates/ folder, such as image names, replica counts, service types, and resource limits. Customizing values.yaml allows you to modify the behavior of the chart without editing the templates directly.
 
 
