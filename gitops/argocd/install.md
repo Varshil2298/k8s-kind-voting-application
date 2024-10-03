@@ -1,4 +1,4 @@
-## 6. Installing Argo CD
+## 1. Installing Argo CD
 
 - Create a namespace for Argo CD:
   ```bash

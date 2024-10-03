@@ -32,7 +32,7 @@ For setting up Argo CD for continuous deployment, refer to the Argo CD Setup Gui
 For deploying the Vote App using Helm, configure the required Helm chart templates and values. [Helm Chart Setup Guide](helm-commands/helm.md).
 
 (4) Kubernetes Setup using kubectl
-To manage your Kubernetes cluster and deploy applications using kubectl, check out the [Kind Cluster Setup Guide](k8-commands/k8s-commands.md).
+To manage your Kubernetes cluster and deploy applications using kubectl, check out the [Kubernetes Cluster Setup Guide](k8s-commands/k8s-commands.md).
 
 (5) Kubernetes Dashboard Setup
 To set up the Kubernetes Dashboard for monitoring and managing your cluster
@@ -40,16 +40,20 @@ To set up the Kubernetes Dashboard for monitoring and managing your cluster
 
 ## Github Action Pipeline Workflows Folder structure
 
-To create the workflows for each microservices mainly three cicd are required i.e results,vote and worker, check out the [Github workflow](.github/workflows/).
+* To create the workflows for each microservices mainly three cicd are required i.e results,vote and worker, check out the [Github workflow](.github/workflows/).
 
 
-## Creating the helm charts 
+## Creating the helm charts
 
 To create the chart run the following command:
 
 ```bash
 helm create vote-app-charts 
  ```
+
+* To list all the charts for microservices for voting-app:
+[Helm Charts](k8s-specifications/helm/vote-app-charts/).
+
 
 The main files are needed here are only:
 

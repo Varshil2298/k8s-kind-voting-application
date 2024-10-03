@@ -8,6 +8,8 @@ chmod 700 get_helm.sh
 
 ---
 
+## Optional Steps if want to further integrate observability.
+
 ## 2. Install Kube Prometheus Stack
 
 ```bash
