@@ -2,6 +2,19 @@
 
 This guide provides a detailed walkthrough for setting up and managing a Kubernetes cluster using Kind (Kubernetes in Docker) on an AWS EC2 instance, along with automating application deployment through Argo CD and GitHub Actions. The guide covers everything from infrastructure setup to continuous deployment, allowing for efficient management and scaling of microservices.
 
+
+## Architecture
+
+![Architecture diagram](k8s-voting-app.gif)
+
+
+
+* A front-end web app in [Python](/vote) which lets you vote between two options
+* A [Redis](https://hub.docker.com/_/redis/) which collects new votes
+* A [.NET](/worker/) worker which consumes votes and stores them in database
+* A [Postgres](https://hub.docker.com/_/postgres/) database backed by a Docker volume
+* A [Node.js](/result) web app which shows the results of the voting in real time
+
 ## Overview
 
 This guide covers the steps to:
@@ -63,15 +76,3 @@ The main files are needed here are only:
 
 - values.yaml: The values.yaml file contains default configuration values for the Helm chart. You can customize this file to provide specific values for the various templates defined in the templates/ folder, such as image names, replica counts, service types, and resource limits. Customizing values.yaml allows you to modify the behavior of the chart without editing the templates directly.
 
-
-
-
-## Architecture
-
-
-
-* A front-end web app in [Python](/vote) which lets you vote between two options
-* A [Redis](https://hub.docker.com/_/redis/) which collects new votes
-* A [.NET](/worker/) worker which consumes votes and stores them in database
-* A [Postgres](https://hub.docker.com/_/postgres/) database backed by a Docker volume
-* A [Node.js](/result) web app which shows the results of the voting in real time
