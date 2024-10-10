@@ -2,16 +2,9 @@
 
 This guide provides a detailed walkthrough for setting up and managing a Kubernetes cluster using Kind (Kubernetes in Docker) on an AWS EC2 instance, along with automating application deployment through Argo CD and GitHub Actions. The guide covers everything from infrastructure setup to continuous deployment, allowing for efficient management and scaling of microservices.
 
-
 ## Architecture
 
-<<<<<<< HEAD
-![Architecture diagram](voting-app-ezgif.com-effects.gif)
-=======
 ![Architecture diagram](voting-app.gif)
->>>>>>> 896a6814a9e43e129dd5a0f86006d9fd1b1a8d09
-
-
 
 * A front-end web app in [Python](/vote) which lets you vote between two options
 * A [Redis](https://hub.docker.com/_/redis/) which collects new votes
