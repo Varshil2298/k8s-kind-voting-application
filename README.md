@@ -5,7 +5,11 @@ This guide provides a detailed walkthrough for setting up and managing a Kuberne
 
 ## Architecture
 
+<<<<<<< HEAD
 ![Architecture diagram](voting-app-ezgif.com-effects.gif)
+=======
+![Architecture diagram](voting-app.gif)
+>>>>>>> 896a6814a9e43e129dd5a0f86006d9fd1b1a8d09
 
 
 
