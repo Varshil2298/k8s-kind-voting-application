@@ -1,4 +1,5 @@
-var app = angular.module('catsvsdogs', []);
+// Updated module name to match the new voting app
+var app = angular.module('mountainsvsbeaches', []);
 var socket = io.connect();
 
 var bg1 = document.getElementById('background-stats-1');
