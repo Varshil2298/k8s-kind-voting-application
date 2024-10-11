@@ -5,7 +5,7 @@
 result:
   image:
     repo: "volley123/result-app"
-    tag: "11293245150"
+    tag: "11293344786"
     pullPolicy: IfNotPresent
   affinity: {}
   nodeSelector: {}
