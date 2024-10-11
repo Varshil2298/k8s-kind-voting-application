@@ -69,7 +69,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 40px;
+  font-size: 35px; /* Reduced font size */
   font-weight: 600;
   width: 450px;
   height: 200px;
@@ -91,7 +91,7 @@ body {
   transform: translateY(-50%);
   text-align: left;
   padding-left: 50px;
-  padding-right: 50px; /* Ensure balanced padding */
+  padding-right: 50px;
 }
 
 #choice .choice .label {
@@ -100,11 +100,13 @@ body {
 
 #choice .choice.mountains {
   color: #f38a21;
+  font-size: 35px; /* Reduced font size */
   float: left;
 }
 
 #choice .choice.beaches {
   color: #00cbca;
+  font-size: 35px; /* Reduced font size */
   float: right;
 }
 
