@@ -6,9 +6,9 @@ import random
 import json
 import logging
 
-# Set option names
-option_a = os.getenv('OPTION_A', "Cats")
-option_b = os.getenv('OPTION_B', "Dogs")
+# Set option names for "Mountains" and "Beaches"
+option_a = os.getenv('OPTION_A', "Mountains")
+option_b = os.getenv('OPTION_B', "Beaches")
 hostname = socket.gethostname()
 
 app = Flask(__name__)
@@ -42,21 +42,21 @@ def hello():
         
         # Store the vote in Redis and increment the vote count for the option
         if vote == 'a':
-            redis.incr('votes_cats')
+            redis.incr('votes_mountains')
         elif vote == 'b':
-            redis.incr('votes_dogs')
+            redis.incr('votes_beaches')
         
         # Log the vote (can be used for logging or analytics)
         data = json.dumps({'voter_id': voter_id, 'vote': vote})
         redis.rpush('votes', data)
 
     # Retrieve current vote counts from Redis
-    votes_cats = redis.get('votes_cats') or 0
-    votes_dogs = redis.get('votes_dogs') or 0
+    votes_mountains = redis.get('votes_mountains') or 0
+    votes_beaches = redis.get('votes_beaches') or 0
 
     # Convert to integers (Redis stores as bytes)
-    votes_cats = int(votes_cats)
-    votes_dogs = int(votes_dogs)
+    votes_mountains = int(votes_mountains)
+    votes_beaches = int(votes_beaches)
 
     # Render the page with current vote counts and voter choice
     resp = make_response(render_template(
@@ -65,8 +65,8 @@ def hello():
         option_b=option_b,
         hostname=hostname,
         vote=vote,
-        votes_cats=votes_cats,
-        votes_dogs=votes_dogs
+        votes_cats=votes_mountains,  # update key to votes_mountains
+        votes_dogs=votes_beaches      # update key to votes_beaches
     ))
     
     # Set the voter ID in a cookie for future reference
